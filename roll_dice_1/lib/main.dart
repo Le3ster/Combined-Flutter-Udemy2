@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/gradient_container.dart';
+import 'package:roll_dice_1/gradient_container.dart';
 
+/// Entry point of the Flutter application.
 void main() {
   runApp(
     const MaterialApp(
+      debugShowCheckedModeBanner: false, // Hides the debug banner
       home: Scaffold(
         body: GradientContainer(
           Color.fromARGB(255, 133, 132, 172),

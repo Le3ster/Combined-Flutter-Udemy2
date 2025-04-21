@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// A reusable text widget with consistent white text styling.
 class StyledText extends StatelessWidget {
   const StyledText(this.text, {super.key});
 
   final String text;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Text(
       text,
       style: const TextStyle(
