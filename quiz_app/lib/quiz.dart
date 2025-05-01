@@ -8,9 +8,7 @@ class Quiz extends StatefulWidget {
   const Quiz({super.key});
 
   @override
-  State<Quiz> createState() {
-    return _QuizState();
-  }
+  State<Quiz> createState() => _QuizState();
 }
 
 class _QuizState extends State<Quiz> {
@@ -41,15 +39,13 @@ class _QuizState extends State<Quiz> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
+    // Renders current screen based on state
     Widget screenWidget = StartScreen(switchScreen);
 
     if (activeScreen == 'questions-screen') {
-      screenWidget = QuestionsScreen(
-        onSelectAnswer: chooseAnswer,
-      );
-    }
-    if (activeScreen == 'results-screen') {
+      screenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer);
+    } else if (activeScreen == 'results-screen') {
       screenWidget = ResultScreen(
         chosenAnswers: selectedAnswers,
         restartQuiz: restartQuiz,
@@ -57,6 +53,7 @@ class _QuizState extends State<Quiz> {
     }
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
           decoration: const BoxDecoration(

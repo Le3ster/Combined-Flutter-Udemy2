@@ -1,7 +1,12 @@
+// lib/widgets/main_drawer.dart
+
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key, required this.onSelectScreen});
+  const MainDrawer({
+    super.key,
+    required this.onSelectScreen,
+  });
 
   final void Function(String identifier) onSelectScreen;
 
@@ -13,14 +18,19 @@ class MainDrawer extends StatelessWidget {
           DrawerHeader(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primaryContainer,
-                Theme.of(context).colorScheme.primaryContainer.withOpacity(0.8)
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            )),
+              // Use theme gradient for visual branding
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.primaryContainer,
+                  Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(0.8),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
             child: Row(
               children: [
                 Icon(
@@ -28,14 +38,12 @@ class MainDrawer extends StatelessWidget {
                   size: 48,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(
-                  width: 18,
-                ),
+                const SizedBox(width: 18),
                 Text(
                   'Cooking Up!',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ],
             ),
@@ -49,12 +57,12 @@ class MainDrawer extends StatelessWidget {
             title: Text(
               'Meals',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24,
-                  ),
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24,
+              ),
             ),
             onTap: () {
-              onSelectScreen('meals');
+              onSelectScreen('meals'); // Navigate to Meals tab
             },
           ),
           ListTile(
@@ -66,14 +74,14 @@ class MainDrawer extends StatelessWidget {
             title: Text(
               'Filters',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 24,
-                  ),
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24,
+              ),
             ),
             onTap: () {
-              onSelectScreen('filters');
+              onSelectScreen('filters'); // Navigate to Filters screen
             },
-          )
+          ),
         ],
       ),
     );

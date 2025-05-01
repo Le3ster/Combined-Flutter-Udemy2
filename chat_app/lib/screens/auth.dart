@@ -29,8 +29,8 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submit() async {
     final isValid = _form.currentState!.validate();
 
-    if (!isValid || !_isLogin && _selectedImage == null) {
-      //show error image
+    if (!isValid || (!_isLogin && _selectedImage == null)) {
+      // Ensure form is valid and image is selected for signup
       return;
     }
 
@@ -42,15 +42,18 @@ class _AuthScreenState extends State<AuthScreen> {
       });
 
       if (_isLogin) {
-        final userCredentials = await _firebase.signInWithEmailAndPassword(
+        // Sign in existing user
+        await _firebase.signInWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
       } else {
+        // Create new user and upload image
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
+
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('user_images')
@@ -59,6 +62,7 @@ class _AuthScreenState extends State<AuthScreen> {
         await storageRef.putFile(_selectedImage!);
         final imageUrl = await storageRef.getDownloadURL();
 
+        // Save additional user info to Firestore
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredentials.user!.uid)
@@ -69,6 +73,7 @@ class _AuthScreenState extends State<AuthScreen> {
         });
       }
     } on FirebaseAuthException catch (error) {
+      // Display auth error message
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -137,7 +142,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           if (!_isLogin)
                             TextFormField(
                               decoration:
-                                  const InputDecoration(labelText: 'Username'),
+                              const InputDecoration(labelText: 'Username'),
                               enableSuggestions: false,
                               validator: (value) {
                                 if (value == null ||
@@ -153,7 +158,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                           TextFormField(
                             decoration:
-                                const InputDecoration(labelText: 'Password'),
+                            const InputDecoration(labelText: 'Password'),
                             obscureText: true,
                             validator: (value) {
                               if (value == null || value.trim().length < 6) {

@@ -31,38 +31,43 @@ class ChatMessages extends StatelessWidget {
             child: Text('Something went wrong...'),
           );
         }
+
         final loadedMessages = chatSnapshots.data!.docs;
+
         return ListView.builder(
-            padding: const EdgeInsets.only(
-              bottom: 40,
-              left: 13,
-              right: 13,
-            ),
-            reverse: true,
-            itemCount: loadedMessages.length,
-            itemBuilder: (ctx, index) {
-              final chatMessage = loadedMessages[index].data();
-              final nextChatMessage = index + 1 < loadedMessages.length
-                  ? loadedMessages[index + 1].data()
-                  : null;
-              final currentMessageUserId = chatMessage['userId'];
-              final nextMessageUserId =
-                  nextChatMessage != null ? nextChatMessage['userId'] : null;
-              final nextUserIsSame = nextMessageUserId == currentMessageUserId;
-              if (nextUserIsSame) {
-                return MessageBubble.next(
-                  message: chatMessage['text'],
-                  isMe: authUser.uid == currentMessageUserId,
-                );
-              } else {
-                return MessageBubble.first(
-                  userImage: chatMessage['userImage'],
-                  username: chatMessage['username'],
-                  message: chatMessage['text'],
-                  isMe: authUser.uid == currentMessageUserId,
-                );
-              }
-            });
+          padding: const EdgeInsets.only(
+            bottom: 40,
+            left: 13,
+            right: 13,
+          ),
+          reverse: true,
+          itemCount: loadedMessages.length,
+          itemBuilder: (ctx, index) {
+            final chatMessage = loadedMessages[index].data();
+            final nextChatMessage = index + 1 < loadedMessages.length
+                ? loadedMessages[index + 1].data()
+                : null;
+
+            final currentMessageUserId = chatMessage['userId'];
+            final nextMessageUserId =
+            nextChatMessage != null ? nextChatMessage['userId'] : null;
+            final nextUserIsSame = nextMessageUserId == currentMessageUserId;
+
+            final isMe = authUser.uid == currentMessageUserId;
+
+            return nextUserIsSame
+                ? MessageBubble.next(
+              message: chatMessage['text'],
+              isMe: isMe,
+            )
+                : MessageBubble.first(
+              userImage: chatMessage['userImage'],
+              username: chatMessage['username'],
+              message: chatMessage['text'],
+              isMe: isMe,
+            );
+          },
+        );
       },
     );
   }

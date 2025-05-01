@@ -16,20 +16,21 @@ class UserImagePicker extends StatefulWidget {
 
 class _UserImagePickerState extends State<UserImagePicker> {
   File? _pickedImageFile;
+
   void _pickImage() async {
     final pickedImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 50,
       maxWidth: 150,
     );
-    if (pickedImage == null) {
-      return;
-    }
+
+    if (pickedImage == null) return;
+
     setState(() {
       _pickedImageFile = File(pickedImage.path);
     });
 
-    widget.onPickImage(_pickedImageFile!);
+    widget.onPickImage(_pickedImageFile!); // Callback with picked image
   }
 
   @override
@@ -40,7 +41,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
           radius: 40,
           backgroundColor: Colors.grey,
           foregroundImage:
-              _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
+          _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
         ),
         TextButton.icon(
           onPressed: _pickImage,

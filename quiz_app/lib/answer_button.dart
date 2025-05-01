@@ -11,7 +11,7 @@ class AnswerButton extends StatelessWidget {
   final void Function() onTap;
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
@@ -19,10 +19,15 @@ class AnswerButton extends StatelessWidget {
           vertical: 10,
           horizontal: 40,
         ),
+        minimumSize: const Size.fromHeight(48), // improves tap area
       ),
       child: Text(
         answerText,
         textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

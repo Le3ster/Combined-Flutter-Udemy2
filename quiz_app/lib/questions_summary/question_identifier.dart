@@ -13,15 +13,17 @@ class QuestionIdentifier extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final questionNumber = questionIndex + 1;
+
     return Container(
       width: 30,
       height: 30,
       alignment: Alignment.center,
       decoration: BoxDecoration(
+        // Green if correct, red if incorrect
         color: isCorrectAnswer
-            ? Color.fromARGB(255, 40, 128, 81)
-            : Color.fromARGB(255, 203, 68, 54),
-        borderRadius: BorderRadius.circular(100),
+            ? const Color.fromARGB(255, 40, 128, 81)
+            : const Color.fromARGB(255, 203, 68, 54),
+        borderRadius: BorderRadius.circular(100), // full circle
       ),
       child: Text(
         questionNumber.toString(),

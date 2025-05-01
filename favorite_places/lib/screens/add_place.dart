@@ -7,13 +7,12 @@ import 'package:favorite_places/widgets/loaction_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Screen for adding a new place with title, image, and location.
 class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});
 
   @override
-  ConsumerState<AddPlaceScreen> createState() {
-    return _AddPlaceScreenState();
-  }
+  ConsumerState<AddPlaceScreen> createState() => _AddPlaceScreenState();
 }
 
 class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
@@ -21,13 +20,14 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
   File? _selectedImage;
   PlaceLocation? _selectedLocation;
 
+  /// Validates input and saves the new place
   void _savePlace() {
     final enteredTitle = _titleController.text;
 
     if (enteredTitle.isEmpty ||
         _selectedImage == null ||
         _selectedLocation == null) {
-      return;
+      return; // Skip if any required input is missing
     }
 
     ref
@@ -53,31 +53,25 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
         child: Column(
           children: [
             TextField(
-              decoration: const InputDecoration(labelText: 'Title'),
               controller: _titleController,
+              decoration: const InputDecoration(labelText: 'Title'),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             ImageInput(
               onPickImage: (image) {
                 _selectedImage = image;
               },
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             LocationInput(
               onSelectLocation: (location) {
                 _selectedLocation = location;
               },
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _savePlace,
               icon: const Icon(Icons.add),

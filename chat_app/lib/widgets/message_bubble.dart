@@ -34,9 +34,7 @@ class MessageBubble extends StatelessWidget {
             top: 15,
             right: isMe ? 0 : null,
             child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                userImage!,
-              ),
+              backgroundImage: NetworkImage(userImage!),
               backgroundColor: theme.colorScheme.primary.withAlpha(180),
               radius: 23,
             ),
@@ -45,19 +43,16 @@ class MessageBubble extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 46),
           child: Row(
             mainAxisAlignment:
-                isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment:
-                    isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
                   if (isFirstInSequence) const SizedBox(height: 18),
                   if (username != null)
                     Padding(
-                      padding: const EdgeInsets.only(
-                        left: 13,
-                        right: 13,
-                      ),
+                      padding: const EdgeInsets.only(left: 13, right: 13),
                       child: Text(
                         username!,
                         style: const TextStyle(

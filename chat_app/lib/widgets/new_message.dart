@@ -10,7 +10,7 @@ class NewMessage extends StatefulWidget {
 }
 
 class _NewMessageState extends State<NewMessage> {
-  var _messageController = TextEditingController();
+  final _messageController = TextEditingController();
 
   @override
   void dispose() {
@@ -18,37 +18,37 @@ class _NewMessageState extends State<NewMessage> {
     super.dispose();
   }
 
-  void _submitMessage() async {
+  Future<void> _submitMessage() async {
     final enteredMessage = _messageController.text;
-    if (enteredMessage.trim().isEmpty) {
-      return;
-    }
+    if (enteredMessage.trim().isEmpty) return;
+
     FocusScope.of(context).unfocus();
     _messageController.clear();
 
-    final user = FirebaseAuth.instance.currentUser!;
-    final userData = await FirebaseFirestore.instance
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final userDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .get();
 
-    FirebaseFirestore.instance.collection('chat').add({
+    final userData = userDoc.data();
+    if (userData == null) return;
+
+    await FirebaseFirestore.instance.collection('chat').add({
       'text': enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,
-      'username': userData.data()!['username'],
-      'userImage': userData.data()!['image_url'],
+      'username': userData['username'],
+      'userImage': userData['image_url'],
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 15,
-        right: 1,
-        bottom: 14,
-      ),
+      padding: const EdgeInsets.only(left: 15, right: 1, bottom: 14),
       child: Row(
         children: [
           Expanded(
@@ -57,8 +57,10 @@ class _NewMessageState extends State<NewMessage> {
               textCapitalization: TextCapitalization.sentences,
               autocorrect: true,
               enableSuggestions: true,
-              decoration:
-                  const InputDecoration(labelText: 'Send a message ...'),
+              decoration: const InputDecoration(
+                labelText: 'Send a message ...',
+              ),
+              onSubmitted: (_) => _submitMessage(),
             ),
           ),
           IconButton(

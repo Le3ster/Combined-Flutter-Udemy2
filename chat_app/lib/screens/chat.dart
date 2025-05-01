@@ -14,8 +14,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   void setupPushNotifications() async {
     final fcm = FirebaseMessaging.instance;
-    await fcm.requestPermission();
-    fcm.subscribeToTopic('chat');
+
+    await fcm.requestPermission(); // Request notification permissions on iOS
+    fcm.subscribeToTopic('chat'); // Subscribe to a topic for receiving chat notifications
   }
 
   @override
@@ -32,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              FirebaseAuth.instance.signOut(); // Handle user sign-out
             },
             icon: Icon(
               Icons.exit_to_app,
@@ -43,8 +44,8 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: const Column(
         children: [
-          Expanded(child: ChatMessages()),
-          NewMessage(),
+          Expanded(child: ChatMessages()), // Displays chat messages
+          NewMessage(), // Input field to send new messages
         ],
       ),
     );

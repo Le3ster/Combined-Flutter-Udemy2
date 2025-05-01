@@ -1,12 +1,13 @@
-class QuizQuestion{
+class QuizQuestion {
   const QuizQuestion(this.text, this.answers);
 
   final String text;
   final List<String> answers;
 
+  /// Returns a new shuffled list of the answer options
   List<String> getShuffledAnswers() {
-    final shuffeledList = List.of(answers);
-    shuffeledList.shuffle();
-    return shuffeledList;
+    final shuffledList = List.of(answers); // creates a copy
+    shuffledList.shuffle();
+    return shuffledList;
   }
 }

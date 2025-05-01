@@ -13,9 +13,7 @@ class SummaryItem extends StatelessWidget {
         itemData['user_answer'] == itemData['correct_answer'];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,6 +26,7 @@ class SummaryItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // The actual question text
                 Text(
                   itemData['question'] as String,
                   style: GoogleFonts.lato(
@@ -36,17 +35,21 @@ class SummaryItem extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
+                const SizedBox(height: 5),
+                // The user's chosen answer (in red)
+                Text(
+                  itemData['user_answer'] as String,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 203, 68, 54),
+                  ),
                 ),
-                Text(itemData['user_answer'] as String,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 203, 68, 54),       
-                    )),
-                Text(itemData['correct_answer'] as String,
-                    style: const TextStyle(
-                      color:Color.fromARGB(255, 40, 128, 81)
-                    )),
+                // The correct answer (in green)
+                Text(
+                  itemData['correct_answer'] as String,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 40, 128, 81),
+                  ),
+                ),
               ],
             ),
           ),

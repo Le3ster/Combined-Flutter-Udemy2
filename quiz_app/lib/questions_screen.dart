@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/answer_button.dart';
 import 'package:quiz_app/data/questions.dart';
 
-
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({
     super.key,
@@ -13,9 +12,7 @@ class QuestionsScreen extends StatefulWidget {
   final void Function(String answer) onSelectAnswer;
 
   @override
-  State<QuestionsScreen> createState() {
-    return _QuestionsScreenState();
-  }
+  State<QuestionsScreen> createState() => _QuestionsScreenState();
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
@@ -24,12 +21,22 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer);
     setState(() {
-      currentQuestionIndex++; 
+      currentQuestionIndex++;
     });
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
+    // Prevents crash if index exceeds available questions
+    if (currentQuestionIndex >= questions.length) {
+      return const Center(
+        child: Text(
+          'No more questions.',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+    }
+
     final currentQuestion = questions[currentQuestionIndex];
 
     return SizedBox(
@@ -50,14 +57,13 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
+            // Dynamically renders all answer buttons
             ...currentQuestion.getShuffledAnswers().map((answer) {
               return AnswerButton(
                 answerText: answer,
-                onTap: () {
-                  answerQuestion(answer);
-                },
+                onTap: () => answerQuestion(answer),
               );
-            })
+            }),
           ],
         ),
       ),

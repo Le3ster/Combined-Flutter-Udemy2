@@ -7,10 +7,10 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FlutterChat'),
+        title: const Text('FlutterChat'), // App title shown during splash
       ),
       body: const Center(
-        child: Text('Loading...'),
+        child: Text('Loading...'), // Splash message shown while app initializes
       ),
     );
   }
